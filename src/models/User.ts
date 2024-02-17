@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-const RegisterUserSchema = new Schema(
+const UserSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     password: {
@@ -17,5 +17,4 @@ const RegisterUserSchema = new Schema(
   { timestamps: true }
 );
 
-export const RegisterUser =
-  models?.RegisterUser || model("RegisterUser", RegisterUserSchema);
+export const User = models?.User || model("User", UserSchema);

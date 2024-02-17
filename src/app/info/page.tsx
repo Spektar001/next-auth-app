@@ -7,6 +7,7 @@ const InfoPage = () => {
   const session = useSession();
   const status = session.status;
   const userData = session.data;
+  console.log(session);
 
   if (status === "unauthenticated") {
     redirect("/");

@@ -1,6 +1,6 @@
 import clientPromise from "@/libs/mongoClient";
-import { RegisterUser } from "@/models/RegisterUser";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import { User } from "@/models/User";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -8,7 +8,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
   secret: process.env.AUTH_SECRET_KEY,
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -18,7 +18,6 @@ const handler = NextAuth({
       name: "Credentials",
       id: "credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "username" },
         email: {
           label: "Email",
           type: "email",
@@ -32,7 +31,7 @@ const handler = NextAuth({
 
         mongoose.connect(process.env.MONGO_URI!);
 
-        const user = await RegisterUser.findOne({ email });
+        const user = await User.findOne({ email });
         const passwordOk = user && password === user.password;
 
         if (passwordOk) {
